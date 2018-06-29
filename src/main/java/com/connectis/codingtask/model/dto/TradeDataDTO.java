@@ -1,17 +1,25 @@
 package com.connectis.codingtask.model.dto;
 
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 public class TradeDataDTO {
 
     @NotNull
     private String customer;
 
     @NotNull
+    @Min(value = 6)
+    @Max(value = 6)
     private String ccyPair;
 
     @NotNull
@@ -24,10 +32,10 @@ public class TradeDataDTO {
     private LocalDate tradeDate;
 
     @NotNull
-    private Double ammount1;
+    private Double amount1;
 
     @NotNull
-    private Double ammount2;
+    private Double amount2;
 
     @NotNull
     private Double rate;

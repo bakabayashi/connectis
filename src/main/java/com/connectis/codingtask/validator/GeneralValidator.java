@@ -2,8 +2,6 @@ package com.connectis.codingtask.validator;
 
 import com.connectis.codingtask.model.dto.CounterParty;
 import com.connectis.codingtask.model.dto.TradeDataDTO;
-import net.objectlab.kit.datecalc.common.DateCalculator;
-import net.objectlab.kit.datecalc.jdk8.LocalDateKitCalculatorsFactory;
 
 import java.time.LocalDate;
 import java.util.Currency;
@@ -18,7 +16,6 @@ import static java.time.DayOfWeek.SUNDAY;
 
 public class GeneralValidator {
 
-    private static final String SWISS_CALENDAR = "CH";
     private static final Set<String> currencies = Currency.getAvailableCurrencies()
             .stream()
             .map(Currency::getCurrencyCode)
@@ -27,7 +24,7 @@ public class GeneralValidator {
     public static Set<String> validate(TradeDataDTO tradeDataDTO) {
         Set<String> errors = newHashSet();
 
-        if (!isValueDateAfterTradeDate(tradeDataDTO)) {
+        if (isValueDateBeforeTradeDate(tradeDataDTO)) {
             errors.add(buildMessage(VALUE_DATE_ERROR_MESSAGE, tradeDataDTO.getValueDate(), tradeDataDTO.getTradeDate()));
         }
 
@@ -36,11 +33,11 @@ public class GeneralValidator {
         }
 
         if (!areCounterPartiesSupported(tradeDataDTO.getCustomer())) {
-            errors.add(buildMessage(SUPPORTED_COUNTERPARTIES_ERROR_MESSAGE, tradeDataDTO.getValueDate(), CounterParty.values()));
+            errors.add(buildMessage(SUPPORTED_COUNTERPARTIES_ERROR_MESSAGE, tradeDataDTO.getCustomer()));
         }
 
         if (!isCurrencyPairSupported(tradeDataDTO)) {
-            errors.add(buildMessage(SUPPORTED_CURENCY_PAIR_ERROR_MESSAGE, tradeDataDTO.getValueDate()));
+            errors.add(buildMessage(SUPPORTED_CURRENCY_PAIR_ERROR_MESSAGE, tradeDataDTO.getCcyPair()));
         }
 
         return errors;
@@ -52,14 +49,12 @@ public class GeneralValidator {
         return currencies.contains(cur1) && currencies.contains(cur2);
     }
 
-    private static boolean isValueDateAfterTradeDate(TradeDataDTO tradeDataDTO) {
+    private static boolean isValueDateBeforeTradeDate(TradeDataDTO tradeDataDTO) {
         return tradeDataDTO.getValueDate().isBefore(tradeDataDTO.getTradeDate());
     }
 
     private static boolean isWeekendOrHoliday(LocalDate localDate) {
-        DateCalculator<LocalDate> dateCalculator = LocalDateKitCalculatorsFactory.forwardCalculator(SWISS_CALENDAR);
-        return dateCalculator.getHolidayCalendar().isHoliday(localDate)
-                || localDate.getDayOfWeek() == SATURDAY
+        return  localDate.getDayOfWeek() == SATURDAY
                 || localDate.getDayOfWeek() == SUNDAY;
     }
 
