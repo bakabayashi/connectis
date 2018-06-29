@@ -15,7 +15,7 @@ public class TradeDataDTO {
     private String ccyPair;
 
     @NotNull
-    private String type;
+    private TradeType type;
 
     @NotNull
     private String direction;
