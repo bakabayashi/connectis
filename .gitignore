@@ -24,3 +24,5 @@ hs_err_pid*
 /.idea/
 /connectis.iml
 connectis.iml
+/target/
+/.gitignore
