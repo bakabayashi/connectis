@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -30,13 +31,13 @@ public class TradeDataDTO {
     private LocalDate tradeDate;
 
     @NotNull
-    private Double amount1;
+    private BigDecimal amount1;
 
     @NotNull
-    private Double amount2;
+    private BigDecimal amount2;
 
     @NotNull
-    private Double rate;
+    private BigDecimal rate;
 
     @NotNull
     private LocalDate valueDate;
@@ -46,5 +47,25 @@ public class TradeDataDTO {
 
     @NotNull
     private String trader;
+
+    private String style;
+
+    private String strategy;
+
+    private String payCcy;
+
+    private BigDecimal premium;
+
+    private String premiumCcy;
+
+    private String premiumType;
+
+    private LocalDate premiumDate;
+
+    private LocalDate deliveryDate;
+
+    private LocalDate expiryDate;
+
+    private LocalDate excerciseStartDate;
 
 }

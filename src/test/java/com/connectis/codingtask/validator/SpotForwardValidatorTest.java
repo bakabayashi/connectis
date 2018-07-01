@@ -27,4 +27,18 @@ public class SpotForwardValidatorTest {
         assertThat(errors).contains(buildMessage(SPOT_FORWARD_DATE_ERROR_MESSAGE, tradeDataDTO.getTradeDate(), tradeDataDTO.getValueDate()));
     }
 
+    @Test
+    public void shouldNotFailWhenTradeDateIs2DaysBeforeValueDate() {
+        //given
+        TradeDataDTO tradeDataDTO = TradeDataDTOUtils.create();
+        tradeDataDTO.setTradeDate(LocalDate.now());
+        tradeDataDTO.setValueDate(LocalDate.now().plusDays(2));
+
+        //when
+        Set<String> errors = SpotForwardValidator.validate(tradeDataDTO);
+
+        //then
+        assertThat(errors).isEmpty();
+    }
+
 }
