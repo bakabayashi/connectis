@@ -37,7 +37,6 @@ public class TradeDataDTO {
     @NotNull
     private BigDecimal rate;
 
-    @NotNull
     private LocalDate valueDate;
 
     @NotNull

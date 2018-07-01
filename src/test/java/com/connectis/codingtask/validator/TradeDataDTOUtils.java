@@ -10,8 +10,8 @@ public class TradeDataDTOUtils {
     static TradeDataDTO create() {
         TradeDataDTO tradeDataDTO = new TradeDataDTO();
 
-        tradeDataDTO.setTradeDate(LocalDate.now());
-        tradeDataDTO.setValueDate(LocalDate.now());
+        tradeDataDTO.setTradeDate(LocalDate.of(2018, 5, 30));
+        tradeDataDTO.setValueDate(LocalDate.of(2018, 6, 1));
         tradeDataDTO.setAmount1(new BigDecimal(1000000.00));
         tradeDataDTO.setAmount2(new BigDecimal(1200000.00));
         tradeDataDTO.setCcyPair("EURUSD");

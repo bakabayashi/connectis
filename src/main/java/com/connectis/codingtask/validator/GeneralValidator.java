@@ -16,6 +16,7 @@ import static java.time.DayOfWeek.SUNDAY;
 
 public class GeneralValidator {
 
+    private static final String CS_ZURICH = "CS Zurich";
     private static final Set<String> currencies = Currency.getAvailableCurrencies()
             .stream()
             .map(Currency::getCurrencyCode)
@@ -23,6 +24,10 @@ public class GeneralValidator {
 
     public static Set<String> validate(TradeDataDTO tradeDataDTO) {
         Set<String> errors = newHashSet();
+
+        if(!isLegalEntityZurich(tradeDataDTO)) {
+            errors.add(buildMessage(LEGAL_ENTITY_ERROR_MESSAGE));
+        }
 
         if (isValueDateBeforeTradeDate(tradeDataDTO)) {
             errors.add(buildMessage(VALUE_DATE_ERROR_MESSAGE, tradeDataDTO.getValueDate(), tradeDataDTO.getTradeDate()));
@@ -41,6 +46,10 @@ public class GeneralValidator {
         }
 
         return errors;
+    }
+
+    private static boolean isLegalEntityZurich(TradeDataDTO tradeDataDTO) {
+        return tradeDataDTO.getLegalEntity().equalsIgnoreCase(CS_ZURICH);
     }
 
     private static boolean isCurrencyPairSupported(TradeDataDTO tradeDataDTO) {

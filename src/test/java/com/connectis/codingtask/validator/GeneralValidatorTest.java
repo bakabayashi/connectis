@@ -12,11 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GeneralValidatorTest {
 
     @Test
-    public void shouldProduceErrorForValueDateBeforeTradeDate() {
+    public void shouldProduceErrorForWrongLegalEntity() {
         //given
         TradeDataDTO tradeDataDTO = TradeDataDTOUtils.create();
-        tradeDataDTO.setTradeDate(LocalDate.now());
-        tradeDataDTO.setValueDate(LocalDate.now().minusDays(1));
+        tradeDataDTO.setLegalEntity("Hamburg");
 
         //when
         Set<String> errors = GeneralValidator.validate(tradeDataDTO);
@@ -24,7 +23,22 @@ public class GeneralValidatorTest {
         //then
         assertThat(errors).isNotEmpty();
         assertThat(errors).hasSize(1);
-        assertThat(errors.contains(buildMessage(VALUE_DATE_ERROR_MESSAGE, tradeDataDTO.getValueDate(), tradeDataDTO.getTradeDate())));
+        assertThat(errors).contains(LEGAL_ENTITY_ERROR_MESSAGE);
+    }
+
+    @Test
+    public void shouldProduceErrorForValueDateBeforeTradeDate() {
+        //given
+        TradeDataDTO tradeDataDTO = TradeDataDTOUtils.create();
+        tradeDataDTO.setValueDate(tradeDataDTO.getTradeDate().minusDays(1));
+
+        //when
+        Set<String> errors = GeneralValidator.validate(tradeDataDTO);
+
+        //then
+        assertThat(errors).isNotEmpty();
+        assertThat(errors).hasSize(1);
+        assertThat(errors).contains(buildMessage(VALUE_DATE_ERROR_MESSAGE, tradeDataDTO.getValueDate(), tradeDataDTO.getTradeDate()));
     }
 
     @Test

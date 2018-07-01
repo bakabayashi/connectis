@@ -17,6 +17,7 @@ public class TradeDataValidationService {
 
         switch(tradeDataDTO.getType()) {
             case Options:
+            case VanillaOption:
                 errors.addAll(OptionValidator.validate(tradeDataDTO));
                 break;
             case Spot:
