@@ -59,7 +59,7 @@ public class GeneralValidator {
     }
 
     private static boolean isValueDateBeforeTradeDate(TradeDataDTO tradeDataDTO) {
-        return tradeDataDTO.getValueDate().isBefore(tradeDataDTO.getTradeDate());
+        return tradeDataDTO.getValueDate() != null && tradeDataDTO.getValueDate().isBefore(tradeDataDTO.getTradeDate());
     }
 
     private static boolean isWeekendOrHoliday(LocalDate localDate) {

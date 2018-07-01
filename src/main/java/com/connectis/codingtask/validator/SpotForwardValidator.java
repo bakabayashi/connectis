@@ -21,7 +21,7 @@ public class SpotForwardValidator {
     }
 
     private static boolean isTradeDateMinimum2DaysBeforeValueDate(TradeDataDTO tradeDataDTO) {
-        return tradeDataDTO.getTradeDate().isBefore(tradeDataDTO.getValueDate().minusDays(2))
-                || tradeDataDTO.getTradeDate().isEqual(tradeDataDTO.getValueDate().minusDays(2));
+        return tradeDataDTO.getValueDate() != null && (tradeDataDTO.getTradeDate().isBefore(tradeDataDTO.getValueDate().minusDays(2))
+                || tradeDataDTO.getTradeDate().isEqual(tradeDataDTO.getValueDate().minusDays(2)));
     }
 }
