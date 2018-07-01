@@ -20,7 +20,7 @@ public class TradeDataDTOUtils {
         tradeDataDTO.setLegalEntity("CS Zurich");
         tradeDataDTO.setRate(new BigDecimal(1.12));
         tradeDataDTO.setTrader("Johann Baumfiddler");
-        tradeDataDTO.setType(TradeType.FORWARD);
+        tradeDataDTO.setType(TradeType.Forward);
 
         return tradeDataDTO;
     }

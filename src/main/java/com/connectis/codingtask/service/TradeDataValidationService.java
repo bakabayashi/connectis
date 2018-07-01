@@ -16,11 +16,11 @@ public class TradeDataValidationService {
         Set<String> errors = GeneralValidator.validate(tradeDataDTO);
 
         switch(tradeDataDTO.getType()) {
-            case OPTIONS:
+            case Options:
                 errors.addAll(OptionValidator.validate(tradeDataDTO));
                 break;
-            case FX_SPOT:
-            case FORWARD:
+            case Spot:
+            case Forward:
                 errors.addAll(SpotForwardValidator.validate(tradeDataDTO));
                 break;
         }
