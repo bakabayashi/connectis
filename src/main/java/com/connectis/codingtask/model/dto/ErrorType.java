@@ -4,7 +4,8 @@ import lombok.Getter;
 
 public enum ErrorType {
     GENERAL_UNEXPECTED_ERROR("CT_GEN"),
-    GENERAL_VALIDATION_ERROR("CT_VAL");
+    GENERAL_VALIDATION_ERROR("CT_VAL"),
+    TRADE_DATA_VALIDATION_ERROR("CT_1");
 
     @Getter
     private final String code;
