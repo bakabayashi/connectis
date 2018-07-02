@@ -15,16 +15,16 @@ public class OptionValidator {
     public static Set<String> validate(TradeDataDTO tradeDataDTO) {
         Set<String> errors = new HashSet<>();
 
-        if(!isEuropeanOrAmerican(tradeDataDTO)) {
+        if (!isEuropeanOrAmerican(tradeDataDTO)) {
             errors.add(buildMessage(OPTION_STYLE_ERROR_MESSAGE));
         }
 
-        if(!isAmericanStyleWithCorrectDates(tradeDataDTO)) {
+        if (!isEuropean(tradeDataDTO) && !isAmericanStyleWithCorrectDates(tradeDataDTO)) {
             errors.add(buildMessage(AMERICAN_STYLE_ERROR_MESSAGE, tradeDataDTO.getExcerciseStartDate(),
                     tradeDataDTO.getTradeDate(), tradeDataDTO.getExpiryDate()));
         }
 
-        if(!isPremiumDateAndExpiryDateBeforeDelivery(tradeDataDTO)) {
+        if (!isPremiumDateAndExpiryDateBeforeDelivery(tradeDataDTO)) {
             errors.add(buildMessage(EXPIRY_PREMIUM_DELIVERY_DATES_ERROR_MESSAGE, tradeDataDTO.getExpiryDate(),
                     tradeDataDTO.getPremiumDate(), tradeDataDTO.getDeliveryDate()));
         }
@@ -33,17 +33,25 @@ public class OptionValidator {
     }
 
     private static boolean isPremiumDateAndExpiryDateBeforeDelivery(TradeDataDTO tradeDataDTO) {
-        return tradeDataDTO.getExpiryDate()!=null && tradeDataDTO.getPremiumDate()!=null && tradeDataDTO.getDeliveryDate()!=null &&
-                tradeDataDTO.getExpiryDate().isBefore(tradeDataDTO.getDeliveryDate()) && tradeDataDTO.getPremiumDate().isBefore(tradeDataDTO.getDeliveryDate());
+        return tradeDataDTO.getExpiryDate() != null && tradeDataDTO.getPremiumDate() != null
+                && tradeDataDTO.getDeliveryDate() != null
+                && tradeDataDTO.getExpiryDate().isBefore(tradeDataDTO.getDeliveryDate())
+                && tradeDataDTO.getPremiumDate().isBefore(tradeDataDTO.getDeliveryDate());
     }
 
     private static boolean isEuropeanOrAmerican(TradeDataDTO tradeDataDTO) {
-        return tradeDataDTO!=null && tradeDataDTO.getStyle().equalsIgnoreCase(AMERICAN) || tradeDataDTO.getStyle().equalsIgnoreCase(EUROPEAN);
+        return tradeDataDTO.getStyle() != null && (tradeDataDTO.getStyle().equalsIgnoreCase(AMERICAN)
+                || tradeDataDTO.getStyle().equalsIgnoreCase(EUROPEAN));
     }
+
+    private static boolean isEuropean(TradeDataDTO tradeDataDTO) {
+        return tradeDataDTO.getStyle() != null && tradeDataDTO.getStyle().equalsIgnoreCase(EUROPEAN);
+    }
+
 
     private static boolean isAmericanStyleWithCorrectDates(TradeDataDTO tradeDataDTO) {
         return tradeDataDTO.getStyle().equalsIgnoreCase(AMERICAN)
-                && tradeDataDTO.getExcerciseStartDate()!=null
+                && tradeDataDTO.getExcerciseStartDate() != null
                 && tradeDataDTO.getExcerciseStartDate().isAfter(tradeDataDTO.getTradeDate())
                 && tradeDataDTO.getExcerciseStartDate().isBefore(tradeDataDTO.getExpiryDate());
     }
