@@ -50,7 +50,7 @@ public class OptionValidator {
 
 
     private static boolean isAmericanStyleWithCorrectDates(TradeDataDTO tradeDataDTO) {
-        return tradeDataDTO.getStyle().equalsIgnoreCase(AMERICAN)
+        return tradeDataDTO.getStyle() != null && tradeDataDTO.getStyle().equalsIgnoreCase(AMERICAN)
                 && tradeDataDTO.getExcerciseStartDate() != null
                 && tradeDataDTO.getExcerciseStartDate().isAfter(tradeDataDTO.getTradeDate())
                 && tradeDataDTO.getExcerciseStartDate().isBefore(tradeDataDTO.getExpiryDate());

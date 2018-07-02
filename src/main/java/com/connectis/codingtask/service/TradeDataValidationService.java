@@ -15,7 +15,7 @@ public class TradeDataValidationService {
     public void validate(TradeDataDTO tradeDataDTO) {
         Set<String> errors = GeneralValidator.validate(tradeDataDTO);
 
-        switch(tradeDataDTO.getType()) {
+        switch (tradeDataDTO.getType()) {
             case VanillaOption:
                 errors.addAll(OptionValidator.validate(tradeDataDTO));
                 break;
@@ -25,7 +25,7 @@ public class TradeDataValidationService {
                 break;
         }
 
-        if(!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             throw new TradeDataValidationException(errors);
         }
     }
